@@ -2,10 +2,34 @@ from bitcoin.rpc import RawProxy
 
 p = RawProxy()
 
-txid = "904cc05ebf56cd3db2eaffc4350982ac2ce00dcf7b03273a6983b6dbb929b208"
+#txid = "4410c8d14ff9f87ceeed1d65cb58e7c7b2422b2d7529afc675208ce2ce09ed7d"
 
-tx = p.getrawtransaction(txid)
+txid = input("Enter TXID: ")
+print()
 
-fee = p.calculate_fee(tx)
+try:
+    raw_tx = p.getrawtransaction(txid)
+except:
+    print("Invalid TXID.")
+    exit()
+decoded_tx = p.decoderawtransaction(raw_tx)
 
-print(fee)
+vin_sum = 0
+vout_sum = 0
+
+# Sum all inputs
+for output in decoded_tx['vin']:
+    prev_raw_tx = p.getrawtransaction(output['txid'])
+    prev_decoded_tx = p.decoderawtransaction(prev_raw_tx)
+    # output['vout'] - input'o transakcijos output'o indeksas
+    vin_sum += prev_decoded_tx['vout'][output['vout']]['value']
+
+# Sum all outputs
+for output in decoded_tx['vout']:
+    vout_sum += output['value']
+
+# Calculate fee
+fee = vin_sum - vout_sum
+
+#print("TXID:", txid)
+print("Transaction fee:", fee, "BTC")

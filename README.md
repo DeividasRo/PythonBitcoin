@@ -10,4 +10,4 @@ Realizuota **rpc_calcfee.py** faile.
 
 Bloko *hash'o* teisingumas patikrinamas atliekant numatytą *hash'avimo* procesą panaudojant visus bloko antraštės laukus.
 
-Realizuota **rpc_checkblock.hash.py** faile.
+Realizuota **rpc_checkblockhash.py** faile.

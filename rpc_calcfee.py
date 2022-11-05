@@ -5,12 +5,11 @@ p = RawProxy()
 #txid = "4410c8d14ff9f87ceeed1d65cb58e7c7b2422b2d7529afc675208ce2ce09ed7d"
 
 txid = input("Enter TXID: ")
-print()
 
 try:
     raw_tx = p.getrawtransaction(txid)
 except:
-    print("Invalid TXID.")
+    print("\nInvalid TXID.")
     exit()
 decoded_tx = p.decoderawtransaction(raw_tx)
 
@@ -32,4 +31,4 @@ for output in decoded_tx['vout']:
 fee = vin_sum - vout_sum
 
 #print("TXID:", txid)
-print("Transaction fee:", fee, "BTC")
+print("\nTransaction fee:", fee, "BTC")
